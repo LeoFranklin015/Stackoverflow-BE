@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import Question from "../models/Question.js";
 export const postAnswer = async (req, res) => {
   const { id: _id } = req.params;
-  const { noOfAnswers, answerBody, userAnswered } = req.body;
+  const { noOfAnswers, answerBody, userAnswered, userId } = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(_id)) {
     return req.status(404).send("question unavailable");
@@ -10,7 +10,7 @@ export const postAnswer = async (req, res) => {
   updateNoOfAnswers(_id, noOfAnswers);
   try {
     const updatedQuestion = await Question.findByIdAndUpdate(_id, {
-      $addToSet: { answer: [{ answerBody, userAnswered, userId: req.userId }] },
+      $addToSet: { answer: [{ answerBody, userAnswered, userId }] },
     });
     res.status(200).json(updatedQuestion);
   } catch (error) {
