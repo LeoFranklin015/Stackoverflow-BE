@@ -24,3 +24,17 @@ export const getAllQuestions = async (req, res) => {
     res.status(404).json({ message: error.message });
   }
 };
+
+export const deleteQuestion = async (req, res) => {
+  const { id: _id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(_id)) {
+    return req.status(404).send("question unavailable");
+  }
+  try {
+    await Questions.findByIdAndRemove(_id);
+    res.status(200).json({ message: " Sucessfully deleted..." });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
