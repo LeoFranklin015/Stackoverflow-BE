@@ -1,13 +1,16 @@
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
+import dotenv from "dotenv";
 import userRoutes from "./routes/user.js";
 import questionRoutes from "./routes/Questions.js";
 import answerRoutes from "./routes/Answers.js";
+
 const app = express();
 app.use(express.json({ limit: "30mb", extebded: true }));
 app.use(express.urlencoded({ limitt: "30mb", extended: true }));
 app.use(cors());
+dotenv.config();
 
 app.get("/", (req, res) => {
   res.send("This is a StackOverflow Clone API");
@@ -19,8 +22,7 @@ app.use("/answer", answerRoutes);
 
 const PORT = process.env.PORT || 4000;
 
-const Connection_URL =
-  "mongodb+srv://LeoFranklin:leoleoleo@stackoverflow-clone.zckevmk.mongodb.net/?retryWrites=true&w=majority";
+const Connection_URL = process.env.CONNECTION_URL;
 
 mongoose
   .connect(Connection_URL, { useNewURLParser: true, useUnifiedTopology: true })
