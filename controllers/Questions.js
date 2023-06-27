@@ -1,4 +1,3 @@
-import Questions from "../models/Question.js";
 import mongoose from "mongoose";
 import Question from "../models/Question.js";
 

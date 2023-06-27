@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import User from "../models/auth.js";
+import Question from "../models/Question.js";
 
 export const getAllUsers = async (req, res) => {
   try {
@@ -45,11 +46,11 @@ export const updateProfile = async (req, res) => {
   const { name, about, tags } = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(_id)) {
-    return res.status(404).send("question unavailable...");
+    return res.status(404).send("Profile unavailable...");
   }
 
   try {
-    const updatedProfile = await User.findByIdAndUpdate(
+    const updatedProfile = await Question.findByIdAndUpdate(
       _id,
       { $set: { name: name, about: about, tags: tags } },
       { new: true }
@@ -57,5 +58,23 @@ export const updateProfile = async (req, res) => {
     res.status(200).json(updatedProfile);
   } catch (error) {
     res.status(405).json({ message: error.message });
+  }
+};
+
+export const updateSubscription = async (req, res) => {
+  const { id: _id } = req.params;
+  const { type } = req.body;
+  if (!mongoose.Types.ObjectId.isValid(_id)) {
+    return res.status(404).send("User unavailable...");
+  }
+  try {
+    const updatedSubscription = await User.findByIdAndUpdate(
+      _id,
+      { $set: { subscription: type } },
+      { new: true }
+    );
+    res.status(200).json(updatedSubscription);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
   }
 };
