@@ -3,7 +3,7 @@ import Question from "../models/Question.js";
 
 export const AskQuestion = async (req, res) => {
   const postQuestionData = req.body;
-  const postQuestion = new Questions({ ...postQuestionData });
+  const postQuestion = new Question({ ...postQuestionData });
   try {
     await postQuestion.save();
     res.status(200).json("Posted a question Sucessfully");
