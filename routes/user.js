@@ -13,6 +13,6 @@ router.post("/signup", signup);
 router.post("/login", login);
 router.get("/getAllUser", getAllUsers);
 router.patch("/update/:id", auth, updateProfile);
-router.patch("/subscribe/:id", updateSubscription);
+router.patch("/subscribe", updateSubscription);
 router.post("/payment", updatePayment);
 export default router;
