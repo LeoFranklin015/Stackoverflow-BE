@@ -1,6 +1,11 @@
 import mongoose from "mongoose";
 import User from "../models/auth.js";
 import Question from "../models/Question.js";
+import Stripe from "stripe";
+
+const stripe = new Stripe(
+  "sk_test_51NNVFQSFLmZqb4QYgeREQnaDKvPSRk8zn6Us1dRnpruCmnIHCO32BEwKDOjoO4t1pU6MYODHIf2osaE0Q3P5brjG00f0q5E3u9"
+);
 
 export const getAllUsers = async (req, res) => {
   try {
@@ -76,5 +81,51 @@ export const updateSubscription = async (req, res) => {
     res.status(200).json(updatedSubscription);
   } catch (error) {
     res.status(400).json({ message: error.message });
+  }
+};
+
+export const updatePayment = async (req, res) => {
+  try {
+    if (req.method != "POST") return res.status(400);
+    const { name, email, paymentMethod } = req.body;
+    // Create a customer
+    const customer = await stripe.customers.create({
+      email,
+      name,
+      payment_method: paymentMethod,
+      invoice_settings: { default_payment_method: paymentMethod },
+    });
+    // Create a product
+    const product = await stripe.products.retrieve("prod_O9q8GjzCtGxnD4");
+    // Create a subscription
+    const subscription = await stripe.subscriptions.create({
+      customer: customer.id,
+      items: [
+        {
+          price_data: {
+            currency: "INR",
+            product: product.id,
+            unit_amount: "50000",
+            recurring: {
+              interval: "month",
+            },
+          },
+        },
+      ],
+
+      payment_settings: {
+        payment_method_types: ["card"],
+        save_default_payment_method: "on_subscription",
+      },
+      expand: ["latest_invoice.payment_intent"],
+    });
+    // Send back the client secret for payment
+    res.json({
+      message: "Subscription successfully initiated",
+      clientSecret: subscription.latest_invoice.payment_intent.client_secret,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Internal server error" });
   }
 };
