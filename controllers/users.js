@@ -98,6 +98,13 @@ export const updatePayment = async (req, res) => {
     // Create a product
     const product = await stripe.products.retrieve(productId);
     // Create a subscription
+    let amount = "0";
+    if (productId === "prod_O9pjsBVkDvAtrb") {
+      amount = "50000";
+    } else if (productId === "prod_O9q8GjzCtGxnD4");
+    {
+      amount = "100000";
+    }
     const subscription = await stripe.subscriptions.create({
       customer: customer.id,
       items: [
@@ -105,7 +112,7 @@ export const updatePayment = async (req, res) => {
           price_data: {
             currency: "INR",
             product: product.id,
-            unit_amount: "50000",
+            unit_amount: amount,
             recurring: {
               interval: "month",
             },
