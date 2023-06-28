@@ -87,7 +87,7 @@ export const updateSubscription = async (req, res) => {
 export const updatePayment = async (req, res) => {
   try {
     if (req.method != "POST") return res.status(400);
-    const { name, email, paymentMethod } = req.body;
+    const { name, email, paymentMethod, productId } = req.body;
     // Create a customer
     const customer = await stripe.customers.create({
       email,
@@ -96,7 +96,7 @@ export const updatePayment = async (req, res) => {
       invoice_settings: { default_payment_method: paymentMethod },
     });
     // Create a product
-    const product = await stripe.products.retrieve("prod_O9q8GjzCtGxnD4");
+    const product = await stripe.products.retrieve(productId);
     // Create a subscription
     const subscription = await stripe.subscriptions.create({
       customer: customer.id,
