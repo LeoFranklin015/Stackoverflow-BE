@@ -26,16 +26,36 @@ export const getAllUsers = async (req, res) => {
   }
 };
 
+// export const updateProfile = async (req, res) => {
+//   const { id: _id } = req.params;
+//   const { name, about, tags } = req.body;
+
+//   if (!mongoose.Types.ObjectId.isValid(_id)) {
+//     return res.status(404).send("Profile unavailable...");
+//   }
+
+//   try {
+//     const updatedProfile = await Question.findByIdAndUpdate(
+//       _id,
+//       { $set: { name: name, about: about, tags: tags } },
+//       { new: true }
+//     );
+//     res.status(200).json(updatedProfile);
+//   } catch (error) {
+//     res.status(405).json({ message: error.message });
+//   }
+// };
+
 export const updateProfile = async (req, res) => {
   const { id: _id } = req.params;
   const { name, about, tags } = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(_id)) {
-    return res.status(404).send("Profile unavailable...");
+    return res.status(404).send("question unavailable...");
   }
 
   try {
-    const updatedProfile = await Question.findByIdAndUpdate(
+    const updatedProfile = await User.findByIdAndUpdate(
       _id,
       { $set: { name: name, about: about, tags: tags } },
       { new: true }
@@ -48,7 +68,7 @@ export const updateProfile = async (req, res) => {
 
 export const updateSubscription = async (req, res) => {
   const { id, type } = req.body;
-  console.log(id);
+
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).send("User unavailable...");
   }
@@ -116,3 +136,57 @@ export const updatePayment = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+export const currentUser = async (req, res) => {
+  const { id, noOfQuestionsPosted, lastPostedDate } = req.body;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).send("User unavailable...");
+  }
+  try {
+    const data = await User.findByIdAndUpdate(
+      id,
+      {
+        $set: {
+          noOfQuestionsPosted: noOfQuestionsPosted,
+          lastPostedDate: lastPostedDate,
+        },
+      },
+      { new: true }
+    );
+    res.status(200).json(data);
+  } catch (error) {
+    res.status(405).json({ message: error.message });
+  }
+};
+
+export const getUser = async (req, res) => {
+  const { _id: id } = req.body;
+  if (!mongoose.Types.ObjectId.isValid(_id)) {
+    return res.status(404).send("User unavailable...");
+  }
+  try {
+    const data = await User.findById(_id);
+    res.status(200).json(data);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+// export const updateProfile = async (req, res) => {
+//   const { id: _id } = req.params;
+//   const { name, about, tags } = req.body;
+
+//   if (!mongoose.Types.ObjectId.isValid(_id)) {
+//     return res.status(404).send("question unavailable...");
+//   }
+
+//   try {
+//     const updatedProfile = await User.findByIdAndUpdate(
+//       _id,
+//       { $set: { name: name, about: about, tags: tags } },
+//       { new: true }
+//     );
+//     res.status(200).json(updatedProfile);
+//   } catch (error) {
+//     res.status(405).json({ message: error.message });
+//   }
+// };
