@@ -18,6 +18,9 @@ export const getAllUsers = async (req, res) => {
         about: users.about,
         tags: users.tags,
         joinedOn: users.joinedOn,
+        subscription: users.subscription,
+        noOfQuestionsPosted: users.noOfQuestionsPosted,
+        lastPostedDate: users.lastPostedDate,
       });
     });
     res.status(200).json(allUserDetails);
@@ -127,6 +130,7 @@ export const updatePayment = async (req, res) => {
       expand: ["latest_invoice.payment_intent"],
     });
     // Send back the client secret for payment
+
     res.json({
       message: "Subscription successfully initiated",
       clientSecret: subscription.latest_invoice.payment_intent.client_secret,
@@ -138,7 +142,8 @@ export const updatePayment = async (req, res) => {
 };
 
 export const currentUser = async (req, res) => {
-  const { id, noOfQuestionsPosted, lastPostedDate } = req.body;
+  const { id } = req.params;
+  const { noOfQuestionsPosted, lastPostedDate } = req.body;
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).send("User unavailable...");
   }
@@ -160,7 +165,7 @@ export const currentUser = async (req, res) => {
 };
 
 export const getUser = async (req, res) => {
-  const { _id: id } = req.body;
+  const { id: _id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(_id)) {
     return res.status(404).send("User unavailable...");
   }

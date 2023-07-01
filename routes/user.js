@@ -13,10 +13,11 @@ const router = express.Router();
 
 router.post("/signup", signup);
 router.post("/login", login);
+
 router.get("/getAllUser", getAllUsers);
-router.patch("/update/:id", auth, updateProfile);
+router.patch("/update/:id", updateProfile);
 router.patch("/subscribe", updateSubscription);
 router.post("/payment", updatePayment);
-router.patch("/currentUser", currentUser);
-router.get("/getUser", getUser);
+router.patch("/currentUser/:id", currentUser);
+router.get("/getUser/:id", getUser);
 export default router;
