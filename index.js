@@ -13,6 +13,9 @@ app.use(express.urlencoded({ limitt: "30mb", extended: true }));
 app.use(cors());
 dotenv.config();
 
+app.use(express.static("public"));
+app.use("/images", express.static("images"));
+
 app.get("/", (req, res) => {
   res.send("This is a StackOverflow Clone API");
 });
