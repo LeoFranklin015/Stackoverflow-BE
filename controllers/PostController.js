@@ -1,5 +1,5 @@
 import PostModel from "../models/postModel.js";
-import UserModel from "../models/auth.js";
+import User from "../models/auth.js";
 import mongoose from "mongoose";
 
 //Create new post
@@ -86,7 +86,7 @@ export const getTimelinePost = async (req, res) => {
   const { id } = req.params;
   try {
     const currentUserPosts = await PostModel.find({ userId: id });
-    const followersPosts = await UserModel.aggregate([
+    const followersPosts = await User.aggregate([
       {
         $match: {
           _id: new mongoose.Types.ObjectId(id),
