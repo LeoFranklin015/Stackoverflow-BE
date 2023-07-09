@@ -8,7 +8,7 @@ import answerRoutes from "./routes/Answers.js";
 import PostRoutes from "./routes/posts.js";
 import UploadRoute from "./routes/upload.js";
 import userSocioRoutes from "./routes/usersocio.js";
-
+import SearchRoutes from "./routes/search.js";
 const app = express();
 app.use(express.json({ limit: "30mb", extebded: true }));
 app.use(express.urlencoded({ limitt: "30mb", extended: true }));
@@ -28,6 +28,7 @@ app.use("/answer", answerRoutes);
 app.use("/post", PostRoutes);
 app.use("/upload", UploadRoute);
 app.use("/usersocio", userSocioRoutes);
+app.use("/search", SearchRoutes);
 
 const PORT = process.env.PORT || 4000;
 
