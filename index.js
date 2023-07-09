@@ -6,6 +6,8 @@ import userRoutes from "./routes/user.js";
 import questionRoutes from "./routes/Questions.js";
 import answerRoutes from "./routes/Answers.js";
 import PostRoutes from "./routes/posts.js";
+import UploadRoute from "./routes/upload.js";
+import userSocioRoutes from "./routes/usersocio.js";
 
 const app = express();
 app.use(express.json({ limit: "30mb", extebded: true }));
@@ -24,6 +26,8 @@ app.use("/user", userRoutes);
 app.use("/questions", questionRoutes);
 app.use("/answer", answerRoutes);
 app.use("/post", PostRoutes);
+app.use("/upload", UploadRoute);
+app.use("/usersocio", userSocioRoutes);
 
 const PORT = process.env.PORT || 4000;
 
