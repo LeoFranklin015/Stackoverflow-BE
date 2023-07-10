@@ -33,16 +33,16 @@ export const updateUser = async (req, res) => {
         req.body.password = await bcrypt.hash(password, salt);
       }
       // have to change this
-      const user = await UserModel.findByIdAndUpdate(id, req.body, {
+      const result = await UserModel.findByIdAndUpdate(id, req.body, {
         new: true,
       });
       const token = jwt.sign(
-        { username: user.username, id: user._id },
-        process.env.JWT_KEY,
+        { username: result.username, id: result._id },
+        process.env.JWT_SECRET,
         { expiresIn: "1h" }
       );
-      console.log({ user, token });
-      res.status(200).json({ user, token });
+      console.log({ result, token });
+      res.status(200).json({ result, token });
     } catch (error) {
       console.log("Error agya hy");
       res.status(500).json(error);
