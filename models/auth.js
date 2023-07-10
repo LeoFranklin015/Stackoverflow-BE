@@ -9,7 +9,7 @@ const userSchema = mongoose.Schema(
     tags: { type: [String] },
     joinedOn: { type: Date, default: Date.now },
     subscription: { type: String, default: "Free" },
-    lastPostedDate: { type: Date },
+    lastPostedDate: { type: Date, default: Date.now },
     noOfQuestionsPosted: { type: Number, default: 0 },
     profilePicture: String,
     coverPicture: String,
