@@ -20,6 +20,7 @@ const userSchema = mongoose.Schema(
     following: [],
     worksAt: String,
     livesIn: String,
+    verified: { type: Boolean, default: false },
   },
   { timestamps: true }
 );
