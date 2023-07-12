@@ -9,7 +9,11 @@ export const ChatBot = async (req, res) => {
   });
   const openai = new OpenAIApi(configuration);
   let messages = [
-    { role: "system", content: "You are a helpful code assistant." },
+    {
+      role: "system",
+      content:
+        "You are a cool code assistant you provide only code for all the questions asked for particular answer",
+    },
   ];
   const { message } = req.body;
   try {
