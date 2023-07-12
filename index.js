@@ -10,6 +10,7 @@ import UploadRoute from "./routes/upload.js";
 import userSocioRoutes from "./routes/usersocio.js";
 import SearchRoutes from "./routes/search.js";
 import OTPRoutes from "./routes/otp.js";
+import BotRoutes from "./routes/chatbot.js";
 const app = express();
 app.use(express.json({ limit: "30mb", extebded: true }));
 app.use(express.urlencoded({ limitt: "30mb", extended: true }));
@@ -31,6 +32,7 @@ app.use("/upload", UploadRoute);
 app.use("/usersocio", userSocioRoutes);
 app.use("/search", SearchRoutes);
 app.use("/otp", OTPRoutes);
+app.use("/chatbot", BotRoutes);
 const PORT = process.env.PORT || 4000;
 
 const Connection_URL = process.env.CONNECTION_URL;
