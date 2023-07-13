@@ -2,6 +2,7 @@ import nodemailer from "nodemailer";
 import bcrypt from "bcrypt";
 import OTPmodel from "../models/otpVerification.js";
 import users from "../models/auth.js";
+import jwt from "jsonwebtoken";
 
 export const Otpsend = async (req, res) => {
   const { userId, email } = req.body;
@@ -92,11 +93,21 @@ export const OTPverification = async (req, res) => {
             res.status(400).json("OTP is Wrong ");
           } else {
             await users.updateOne({ _id: userId }, { verified: true });
+            const user = await users.findById(userId);
             await OTPmodel.deleteMany({ userId: userId });
+
+            const token = jwt.sign(
+              { email: user.email, id: user._id },
+              process.env.JWT_SECRET,
+              {
+                expiresIn: "1h",
+              }
+            );
             res.status(200).json({
-              status: "verified",
-              message: "OTP verified",
+              result: user,
+              token,
             });
+            console.log("completed");
           }
         }
       }
