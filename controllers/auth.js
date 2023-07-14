@@ -40,13 +40,14 @@ export const login = async (req, res) => {
     const isPassworcrct = bcrypt.compare(password, existingUser.password);
     if (!isPassworcrct) {
       return res.status(400).json({ message: "Password Doesnt match !" });
+    } else {
+      const token = jwt.sign(
+        { email: existingUser.email, id: existingUser._id },
+        process.env.JWT_SECRET,
+        { expiresIn: "1h" }
+      );
+      res.status(200).json({ result: existingUser, token });
     }
-    const token = jwt.sign(
-      { email: existingUser.email, id: existingUser._id },
-      process.env.JWT_SECRET,
-      { expiresIn: "1h" }
-    );
-    res.status(200).json({ result: existingUser, token });
   } catch (error) {
     res.status(500).json("Something Went Wrong...");
   }
