@@ -6,7 +6,7 @@ import {
   getTimelinePost,
   likePost,
   updatePost,
-} from "../Controllers/PostController.js";
+} from "../controllers/PostController.js";
 
 const router = express.Router();
 
