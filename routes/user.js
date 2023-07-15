@@ -1,7 +1,7 @@
 import express from "express";
 import { signup, login } from "../controllers/auth.js";
 import {
-  getAllUsers,
+  getallUsers,
   updateProfile,
   updateSubscription,
   updatePayment,
@@ -14,7 +14,7 @@ const router = express.Router();
 router.post("/signup", signup);
 router.post("/login", login);
 
-router.get("/getAllUser", getAllUsers);
+router.get("/getAllUser", getallUsers);
 router.patch("/update/:id", updateProfile);
 router.patch("/subscribe", updateSubscription);
 router.post("/payment", updatePayment);

@@ -7,30 +7,6 @@ const stripe = new Stripe(
   "sk_test_51NNVFQSFLmZqb4QYgeREQnaDKvPSRk8zn6Us1dRnpruCmnIHCO32BEwKDOjoO4t1pU6MYODHIf2osaE0Q3P5brjG00f0q5E3u9"
 );
 
-export const getAllUsers = async (req, res) => {
-  try {
-    const allUsers = await User.find();
-    const allUserDetails = [];
-    allUsers.forEach((users) => {
-      allUserDetails.push({
-        _id: users._id,
-        name: users.name,
-        about: users.about,
-        tags: users.tags,
-        joinedOn: users.joinedOn,
-        subscription: users.subscription,
-        noOfQuestionsPosted: users.noOfQuestionsPosted,
-        lastPostedDate: users.lastPostedDate,
-        username: users.username,
-        profilePicture: users.profilePicture,
-      });
-    });
-    res.status(200).json(allUserDetails);
-  } catch (error) {
-    res.status(404).json({ message: "User fetch failed" });
-  }
-};
-
 // export const updateProfile = async (req, res) => {
 //   const { id: _id } = req.params;
 //   const { name, about, tags } = req.body;
@@ -197,3 +173,27 @@ export const getUser = async (req, res) => {
 //     res.status(405).json({ message: error.message });
 //   }
 // };
+
+export const getallUsers = async (req, res) => {
+  try {
+    const allUsers = await User.find();
+    const allUserDetails = [];
+    allUsers.forEach((users) => {
+      allUserDetails.push({
+        _id: users._id,
+        name: users.name,
+        about: users.about,
+        tags: users.tags,
+        joinedOn: users.joinedOn,
+        subscription: users.subscription,
+        noOfQuestionsPosted: users.noOfQuestionsPosted,
+        lastPostedDate: users.lastPostedDate,
+        username: users.username,
+        profilePicture: users.profilePicture,
+      });
+    });
+    res.status(200).json(allUserDetails);
+  } catch (error) {
+    res.status(404).json({ message: "User fetch failed" });
+  }
+};
