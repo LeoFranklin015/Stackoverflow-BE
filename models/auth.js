@@ -14,8 +14,16 @@ const userSchema = mongoose.Schema(
     username: { type: String },
     firstname: { type: String },
     lastname: { type: String },
-    profilePicture: String,
-    coverPicture: String,
+    profilePicture: {
+      type: String,
+      default:
+        "http://res.cloudinary.com/djl0e0ryv/image/upload/v1689407733/socio/profile/iajfbsitldjlpr5neu27.png",
+    },
+    coverPicture: {
+      type: String,
+      default:
+        "http://res.cloudinary.com/djl0e0ryv/image/upload/v1689407733/socio/cover/kwdoju7cjsgtauvouo1x.jpg",
+    },
     followers: [],
     following: [],
     worksAt: String,
