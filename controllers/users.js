@@ -21,6 +21,8 @@ export const getAllUsers = async (req, res) => {
         subscription: users.subscription,
         noOfQuestionsPosted: users.noOfQuestionsPosted,
         lastPostedDate: users.lastPostedDate,
+        username: users.username,
+        profilePicture: users.profilePicture,
       });
     });
     res.status(200).json(allUserDetails);
