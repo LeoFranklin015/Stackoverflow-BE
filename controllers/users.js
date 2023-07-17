@@ -81,7 +81,7 @@ export const updatePayment = async (req, res) => {
     // Create a subscription
     let amount = "0";
     if (productId === "prod_O9pjsBVkDvAtrb") {
-      amount = "50000";
+      amount = "10000";
     } else if (productId === "prod_O9q8GjzCtGxnD4");
     {
       amount = "100000";
